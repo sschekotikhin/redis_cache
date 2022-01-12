@@ -14,16 +14,16 @@ module RedisCache
     setting fetch_with_cache : Bool = false
   end
 
-  {% for key_type in [Symbol, String, Array(String | Int64 | Symbol)] %}
+  {% for key_type in [Symbol, String, Array(String | Int32 | Int64 | Symbol)] %}
     # Searches for a value in Redis and, if it exists, returns it;
     # if not, it executes the passed block, and writes the resulting value to Redis.
     #
     # Returns the value written to the base.
     def self.fetch(
       key : {{key_type.id}},
-      ttl : Int64 | Nil = nil,
-      &block : -> String | Int64 | Float64 | Nil
-    ) : String | Int64 | Float64 | Nil
+      ttl : Int32 | Int64 | Nil = nil,
+      &block : -> String | Int32 | Int64 | Float32 | Float64 | Nil
+    ) : String | Int32 | Int64 | Float32 | Float64 | Nil
       cached_value = if settings.fetch_with_cache && (val = read(key)) # already exists
         val
       else # not found :(
@@ -39,7 +39,7 @@ module RedisCache
     # Searches Redis for a value by a given key.
     #
     # Returns the value found in the database.
-    def self.read(key : {{key_type.id}}) : String | Int64 | Float64 | Nil
+    def self.read(key : {{key_type.id}}) : String | Nil
       settings.redis.get(stringify_key(key))
     end
 
@@ -48,9 +48,9 @@ module RedisCache
     # Returns the value written to Redis.
     def self.write(
       key : {{key_type.id}},
-      value : String | Int64 | Float64,
-      ttl : Int64 | Nil
-    ) : String | Int64 | Float64 | Nil
+      value : String | Int32 | Int64 | Float32 | Float64,
+      ttl : Int32 | Int64 | Nil = nil
+    ) : String | Int32 | Int64 | Float32 | Float64 | Nil
       settings.redis.set(
         stringify_key(key),
         value,
@@ -70,11 +70,11 @@ module RedisCache
     # Returns the string representation of the key.
     private def self.stringify_key(key : {{key_type.id}}) : String
       cache_key = [settings.prefix]
-      cache_key << if [Symbol, String].includes?(typeof(key))
-        key.to_s
-      else
-        key.join(":").to_s
-      end
+      {% if [String, Symbol].includes?(key_type) %}
+        cache_key << key.to_s
+      {% else %}
+        cache_key << key.join(":").to_s
+      {% end %}
 
       cache_key.join(":")
     end
