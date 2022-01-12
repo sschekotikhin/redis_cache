@@ -2,12 +2,16 @@ name: Crystal CI
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
+  schedule:
+    - cron: '0 */12 * * *'
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     container:
       image: crystallang/crystal
@@ -24,8 +28,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
-      run: shards install
+      run: shards install --ignore-crystal-version
     - name: Run tests
       run: crystal spec
-      env:
-        REDIS_URL: "redis://localhost:6379/0"
