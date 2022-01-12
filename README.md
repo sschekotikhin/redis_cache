@@ -1,6 +1,6 @@
-[![Crystal CI](https://github.com/sschekotikhin/redis-cache/actions/workflows/crystal.yml/badge.svg?branch=master)](https://github.com/sschekotikhin/redis-cache/actions/workflows/crystal.yml)
+[![Crystal CI](https://github.com/sschekotikhin/redis_cache/actions/workflows/crystal.yml/badge.svg?branch=master)](https://github.com/sschekotikhin/redis_cache/actions/workflows/crystal.yml)
 
-# redis-cache
+# redis_cache
 
 A Ruby-on-Rails-like cache store, that stores data in Redis.
 
@@ -10,8 +10,8 @@ A Ruby-on-Rails-like cache store, that stores data in Redis.
 
    ```yaml
    dependencies:
-     redis-cache:
-       github: sschekotikhin/redis-cache
+     redis_cache:
+       github: sschekotikhin/redis_cache
    ```
 
 2. Run `shards install`
@@ -74,7 +74,7 @@ RedisCache.delete(key: [:foo, :bar])
 
 ## Contributing
 
-1. Fork it (<https://github.com/your-github-user/redis-cache/fork>)
+1. Fork it (<https://github.com/your-github-user/redis_cache/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

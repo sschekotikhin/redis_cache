@@ -1,4 +1,4 @@
-name: redis-cache
+name: redis_cache
 version: 0.1.0
 
 authors:
