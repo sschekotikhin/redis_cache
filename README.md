@@ -82,4 +82,4 @@ RedisCache.delete(key: [:foo, :bar])
 
 ## Contributors
 
-- [SShekotihin](https://github.com/your-github-user) - creator and maintainer
+- [SShekotihin](https://github.com/sschekotikhin) - creator and maintainer
