@@ -11,7 +11,7 @@ A Ruby-on-Rails-like cache store, that stores data in Redis.
    ```yaml
    dependencies:
      redis-cache:
-       github: your-github-user/redis-cache
+       github: sschekotikhin/redis-cache
    ```
 
 2. Run `shards install`
