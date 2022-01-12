@@ -25,7 +25,7 @@ It's important to note that Redis cache value must be string.
 ### Basic example
 
 ```crystal
-# configure
+# configure via Habitat
 RedisCache.configure do |config|
   # redis connection
   config.redis = Redis::PooledClient.new(
