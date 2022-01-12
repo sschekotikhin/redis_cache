@@ -11,11 +11,32 @@ on:
     - cron: '0 */12 * * *'
 
 jobs:
+  ameba:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Crystal
+        uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: latest
+
+      - uses: actions/checkout@v2
+
+      - name: Crystal Ameba Linter
+        id: crystal-ameba
+        uses: crystal-ameba/github-action@v0.2.12
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Analyse code
+        run: ameba
   test:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         crystal: [latest, nightly]
+
     services:
       redis:
         image: redis
