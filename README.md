@@ -48,7 +48,7 @@ end
 # In case of cache hit, the cached value will be returned without executing the block.
 # Passed block to the fetch method should return a value that can be converted to a string via `to_s` method.
 # It can be JSON-string, array of numbers, etc.
-# `key` argument also can be array, symbol, number, and etc.
+# `key` argument also can be array, symbol, number, etc.
 result = RedisCache.fetch(key: [:foo, :bar, :v1], ttl: 86400) do
   # ...
   # some code
