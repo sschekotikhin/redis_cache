@@ -11,15 +11,21 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: crystallang/crystal
+    services:
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
       run: shards install
-    - name: Start Redis
-      uses: supercharge/redis-github-action@1.4.0
-      with:
-        redis-version: 6
     - name: Run tests
       run: crystal spec
       env:
-        REDIS_URL: "redis://redis:6379/10"
+        REDIS_URL: "redis://localhost:6379/0"
