@@ -3,9 +3,7 @@ require "./spec_helper"
 describe RedisCache do
   it "with custom settings" do
     client = Redis::PooledClient.new(
-      host: ENV["REDIS_HOST"]? || "localhost",
-      port: ENV["REDIS_PORT"]? ? ENV["REDIS_PORT"].to_i : 6379,
-      database: 0,
+      url: ENV["REDIS_URL"]? || "redis://localhost:6379/0",
       pool_size: 10
     )
 
@@ -22,11 +20,7 @@ describe RedisCache do
 
   describe "methods" do
     before_each do
-      redis = Redis.new(
-        host: ENV["REDIS_HOST"]? || "localhost",
-        port: ENV["REDIS_PORT"]? ? ENV["REDIS_PORT"].to_i : 6379,
-        database: 0
-      )
+      redis = Redis.new(url: ENV["REDIS_URL"]? || "redis://localhost:6379/0")
 
       RedisCache.configure do |config|
         config.redis = redis
@@ -48,11 +42,8 @@ describe RedisCache do
       it "key have ttl" do
         RedisCache.fetch(key: "key have ttl", ttl: 10) { "expirable value" }
 
-        Redis.new(
-          host: ENV["REDIS_HOST"]? || "localhost",
-          port: ENV["REDIS_PORT"]? ? ENV["REDIS_PORT"].to_i : 6379,
-          database: 0
-        ).ttl("#{RedisCache.settings.prefix}:key have ttl").should eq 10
+        Redis.new(url: ENV["REDIS_URL"]? || "redis://localhost:6379/0",)
+          .ttl("#{RedisCache.settings.prefix}:key have ttl").should eq 10
       end
 
       it "does not write to Redis if fetch_with_cache = false" do
@@ -73,11 +64,8 @@ describe RedisCache do
       it "key have ttl" do
         RedisCache.write(key: "key have ttl", ttl: 10, value: "expirable value")
 
-        Redis.new(
-          host: ENV["REDIS_HOST"]? || "localhost",
-          port: ENV["REDIS_PORT"]? ? ENV["REDIS_PORT"].to_i : 6379,
-          database: 0
-        ).ttl("#{RedisCache.settings.prefix}:key have ttl").should eq 10
+        Redis.new(url: ENV["REDIS_URL"]? || "redis://localhost:6379/0")
+          .ttl("#{RedisCache.settings.prefix}:key have ttl").should eq 10
       end
 
       it "writes and returns data" do
