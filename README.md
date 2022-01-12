@@ -19,7 +19,7 @@ A Ruby-on-Rails-like cache store, that stores data in Redis.
 ## Usage
 
 ```crystal
-require "redis-cache"
+require "redis_cache"
 ```
 
 It's important to note that Redis cache value must be string.
