@@ -63,9 +63,9 @@ describe RedisCache do
       end
 
       it "works with different types of key" do
-        RedisCache.fetch(key: [1, 2, 3, "foo", :bar]) {}
-        RedisCache.fetch(key: "string key") {}
-        RedisCache.fetch(key: :symbol_key) {}
+        RedisCache.fetch(key: [1, 2, 3, "foo", :bar]) { }
+        RedisCache.fetch(key: "string key") { }
+        RedisCache.fetch(key: :symbol_key) { }
       end
     end
 
