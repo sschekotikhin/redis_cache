@@ -22,5 +22,4 @@ jobs:
     - name: Run tests
       run: crystal spec
       env:
-        REDIS_HOST: "redis"
-        REDIS_PORT: 6379
+        REDIS_URL: "redis://redis:6379/10"
