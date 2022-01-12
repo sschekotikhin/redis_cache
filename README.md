@@ -1,3 +1,5 @@
+[![Crystal CI](https://github.com/sschekotikhin/redis-cache/actions/workflows/crystal.yml/badge.svg?branch=master)](https://github.com/sschekotikhin/redis-cache/actions/workflows/crystal.yml)
+
 # redis-cache
 
 A Ruby-on-Rails-like cache store, that stores data in Redis.
