@@ -13,8 +13,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container:
-      image: crystallang/crystal
+    strategy:
+      matrix:
+        crystal: [latest]
     services:
       redis:
         image: redis
@@ -22,12 +23,19 @@ jobs:
           --health-cmd "redis-cli ping"
           --health-interval 10s
           --health-timeout 5s
-          --health-retries 5
         ports:
           - 6379:6379
     steps:
-    - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: shards install --ignore-crystal-version
-    - name: Run tests
-      run: crystal spec
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+        with:
+          crystal: ${{ matrix.crystal }}
+
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: shards install --ignore-crystal-version
+
+      - name: Run tests
+        run: crystal spec
